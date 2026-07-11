@@ -88,6 +88,17 @@ println(result.observation.ascii)
 - If you later port or reference another project, list the upstream source,
   license, and scope of reuse here before submission.
 
+## Official Mirrors
+
+- GitLink: [https://gitlink.org.cn/zyjzyj78/MoonGridGym](https://gitlink.org.cn/zyjzyj78/MoonGridGym)
+- GitHub: [https://github.com/zhaoyuanjuns/MoonGridGym](https://github.com/zhaoyuanjuns/MoonGridGym)
+
+## Contribution Rules
+
+- The default branch is `master`.
+- The commit history is authored by a single contributor account.
+- No virtual or secondary contributors are included.
+
 ## Contest readiness checklist
 
 - Public repository
