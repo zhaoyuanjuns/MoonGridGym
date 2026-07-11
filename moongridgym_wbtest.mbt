@@ -15,3 +15,10 @@ test "action_catalog_is_stable" {
   assert_eq(available_actions().length(), 5)
   assert_eq(available_scenarios().length(), 5)
 }
+
+test "summary_mentions_dimensions" {
+  let env = new_grid_world(7)
+  let summary = env.summary()
+  assert_eq(summary.contains("size=7x7"), true)
+  assert_eq(summary.contains("reachable="), true)
+}
