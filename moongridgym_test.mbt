@@ -35,3 +35,13 @@ test "frozen_lake_renders_holes" {
   assert_eq(rendered.contains("~"), true)
   assert_eq(rendered.contains("FrozenLakeLike"), true)
 }
+
+test "random_maze_can_auto_solve" {
+  let env = @moongridgym.new_random_maze(2026)
+  let plan = env.shortest_path()
+  assert_eq(plan.found, true)
+  assert_eq(plan.steps > 0, true)
+  let stats = env.auto_solve()
+  assert_eq(stats.terminated, true)
+  assert_eq(stats.reward_sum > 0, true)
+}
