@@ -51,6 +51,7 @@ Then use the same interface everywhere:
 ```mbt
 let env = @moongridgym.new_grid_world(7)
 let obs = env.reset()
+println(env.summary())
 println(obs.ascii)
 let result = env.step(@moongridgym.Action::Right)
 println(result.info)
