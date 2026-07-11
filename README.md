@@ -15,6 +15,9 @@ Each environment exposes the same three operations:
 - `step(action)`
 - `render()`
 
+The suite also ships with a built-in shortest-path solver and rollout helpers
+for quick demos and evaluation.
+
 The goal is to give MoonBit developers a clean, easy-to-test foundation for
 simulation, planning, search, and reinforcement-learning demos.
 
@@ -69,6 +72,13 @@ println(result.observation.ascii)
 - `Maze` is a fixed benchmark maze for deterministic examples.
 - `FrozenLakeLike` adds slipping behavior and holes.
 - `RandomMaze` generates a seeded maze for replayable experiments.
+
+### Solver Helpers
+
+- `shortest_path()` returns a BFS plan from the current agent position.
+- `route_string()` formats that plan as a readable action sequence.
+- `rollout(actions)` runs a batch of actions and summarizes the episode.
+- `auto_solve()` runs the shortest-path plan when one exists.
 
 ## Repository policy
 

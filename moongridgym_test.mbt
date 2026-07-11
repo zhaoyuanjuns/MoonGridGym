@@ -5,6 +5,9 @@ test "gridworld_reset_and_step" {
   assert_eq(obs.agent_x, 1)
   assert_eq(obs.agent_y, 1)
   assert_eq(obs.kind, "GridWorld")
+  let plan = env.shortest_path()
+  assert_eq(plan.found, true)
+  assert_eq(plan.steps > 0, true)
 
   let result = env.step(@moongridgym.Action::Left)
   assert_eq(result.reward, -1)

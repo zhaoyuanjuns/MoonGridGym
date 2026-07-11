@@ -288,88 +288,38 @@ fn carve_maze(
   let goal_x = width - 2
   let goal_y = height - 2
   let mut cur_seed = seed % 1_000_003
+  for x = start_x; x <= goal_x; x = x + 1 {
+    board_set(board, width, x, start_y, TILE_EMPTY)
+  }
 
-  let stack_x = Array::new(capacity=width * height)
-  let stack_y = Array::new(capacity=width * height)
-  let mut sp = 0
+  for y = start_y; y <= goal_y; y = y + 1 {
+    board_set(board, width, goal_x, y, TILE_EMPTY)
+  }
+
+  for x = start_x + 1; x < goal_x; x = x + 1 {
+    let (next_seed, roll) = rand_below(cur_seed, 4)
+    cur_seed = next_seed
+    if roll <= 1 && start_y + 1 < goal_y {
+      board_set(board, width, x, start_y + 1, TILE_EMPTY)
+      if roll == 1 && start_y + 2 < goal_y {
+        board_set(board, width, x, start_y + 2, TILE_EMPTY)
+      }
+    }
+  }
+
+  for y = start_y + 1; y < goal_y; y = y + 1 {
+    let (next_seed, roll) = rand_below(cur_seed, 4)
+    cur_seed = next_seed
+    if roll <= 1 && goal_x - 1 > start_x {
+      board_set(board, width, goal_x - 1, y, TILE_EMPTY)
+      if roll == 1 && goal_x - 2 > start_x {
+        board_set(board, width, goal_x - 2, y, TILE_EMPTY)
+      }
+    }
+  }
 
   board_set(board, width, start_x, start_y, TILE_EMPTY)
   board_set(board, width, goal_x, goal_y, TILE_EMPTY)
-  stack_x.push(start_x)
-  stack_y.push(start_y)
-  sp = sp + 1
-
-  while sp > 0 {
-    let cx = stack_x[sp - 1]
-    let cy = stack_y[sp - 1]
-    let mut choice_count = 0
-    let mut chosen_x = cx
-    let mut chosen_y = cy
-    let mut chosen_mid_x = cx
-    let mut chosen_mid_y = cy
-
-    if in_bounds(width, height, cx, cy - 2) &&
-      board_get(board, width, cx, cy - 2) == TILE_WALL {
-      choice_count = choice_count + 1
-      let (next_seed, roll) = rand_below(cur_seed, choice_count)
-      cur_seed = next_seed
-      if roll == 0 {
-        chosen_x = cx
-        chosen_y = cy - 2
-        chosen_mid_x = cx
-        chosen_mid_y = cy - 1
-      }
-    }
-
-    if in_bounds(width, height, cx + 2, cy) &&
-      board_get(board, width, cx + 2, cy) == TILE_WALL {
-      choice_count = choice_count + 1
-      let (next_seed, roll) = rand_below(cur_seed, choice_count)
-      cur_seed = next_seed
-      if roll == 0 {
-        chosen_x = cx + 2
-        chosen_y = cy
-        chosen_mid_x = cx + 1
-        chosen_mid_y = cy
-      }
-    }
-
-    if in_bounds(width, height, cx, cy + 2) &&
-      board_get(board, width, cx, cy + 2) == TILE_WALL {
-      choice_count = choice_count + 1
-      let (next_seed, roll) = rand_below(cur_seed, choice_count)
-      cur_seed = next_seed
-      if roll == 0 {
-        chosen_x = cx
-        chosen_y = cy + 2
-        chosen_mid_x = cx
-        chosen_mid_y = cy + 1
-      }
-    }
-
-    if in_bounds(width, height, cx - 2, cy) &&
-      board_get(board, width, cx - 2, cy) == TILE_WALL {
-      choice_count = choice_count + 1
-      let (next_seed, roll) = rand_below(cur_seed, choice_count)
-      cur_seed = next_seed
-      if roll == 0 {
-        chosen_x = cx - 2
-        chosen_y = cy
-        chosen_mid_x = cx - 1
-        chosen_mid_y = cy
-      }
-    }
-
-    if choice_count == 0 {
-      sp = sp - 1
-    } else {
-      board_set(board, width, chosen_mid_x, chosen_mid_y, TILE_EMPTY)
-      board_set(board, width, chosen_x, chosen_y, TILE_EMPTY)
-      stack_x.push(chosen_x)
-      stack_y.push(chosen_y)
-      sp = sp + 1
-    }
-  }
 
   (board, width, height, start_x, start_y, goal_x)
 }

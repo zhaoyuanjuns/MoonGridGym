@@ -5,6 +5,9 @@ test "maze_has_walls_and_goal" {
   assert_eq(rendered.contains("RandomMaze"), true)
   assert_eq(rendered.contains("G"), true)
   assert_eq(rendered.contains("#"), true)
+  let plan = env.shortest_path()
+  assert_eq(plan.found, true)
+  assert_eq(plan.steps > 0, true)
 }
 
 ///|
