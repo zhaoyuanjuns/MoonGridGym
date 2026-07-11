@@ -1,0 +1,7 @@
+import {
+  "zhaojingjun/moongridgym" @gym,
+}
+
+options(
+  "is-main": true,
+)
