@@ -296,3 +296,23 @@ pub fn GridGym::auto_solve(self : GridGym) -> EpisodeStats {
     }
   }
 }
+
+///|
+pub fn GridGym::summary(self : GridGym) -> String {
+  let builder = StringBuilder::new()
+  builder.write_string(kind_name(self.kind))
+  builder.write_string(" | size=")
+  builder.write_object(self.width)
+  builder.write_string("x")
+  builder.write_object(self.height)
+  builder.write_string(" | reachable=")
+  builder.write_object(self.reachable_cells())
+  builder.write_string(" | path=")
+  let plan = self.shortest_path()
+  if plan.found {
+    builder.write_object(plan.steps)
+  } else {
+    builder.write_string("none")
+  }
+  builder.to_string()
+}

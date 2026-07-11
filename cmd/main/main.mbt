@@ -3,6 +3,7 @@
 fn main {
   let env = @gym.new_random_maze(2026)
   let _ = env.reset()
+  println(env.summary())
   println(env.render())
   let plan = env.shortest_path()
   println(plan.steps)
