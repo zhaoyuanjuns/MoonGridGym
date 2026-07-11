@@ -20,5 +20,8 @@ jobs:
       - name: Test
         run: moon test
 
+      - name: Format
+        run: moon fmt
+
       - name: Run example
         run: moon run cmd/main
