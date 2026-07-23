@@ -8,6 +8,8 @@ It bundles a small set of classic grid environments behind one consistent API:
 - `Maze`
 - `FrozenLakeLike`
 - `RandomMaze`
+- `EmptyRoom`
+- `FourRooms`
 
 Each environment exposes the same three operations:
 
@@ -30,6 +32,8 @@ simulation, planning, search, and reinforcement-learning demos.
 
 ## Quick Start
 
+Requires MoonBit Toolchain v0.10.3 or later.
+
 ```bash
 moon check
 moon test
@@ -45,6 +49,8 @@ Create a scenario with one of the convenience constructors:
 - `new_maze(seed)`
 - `new_frozen_lake_like(seed)`
 - `new_random_maze(seed)`
+- `new_empty_room(seed)`
+- `new_four_rooms(seed)`
 
 Then use the same interface everywhere:
 
@@ -73,6 +79,8 @@ println(result.observation.ascii)
 - `Maze` is a fixed benchmark maze for deterministic examples.
 - `FrozenLakeLike` adds slipping behavior and holes.
 - `RandomMaze` generates a seeded maze for replayable experiments.
+- `EmptyRoom` is a completely empty 7x7 room, ideal for basic random-walk agents.
+- `FourRooms` is the classic Sutton's 4-rooms environment for hierarchical RL tests.
 
 ### Solver Helpers
 

@@ -1,0 +1,108 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "zhaoyuanjuns/moongridgym"
+
+// Values
+pub fn available_actions() -> Array[String]
+
+pub fn available_scenarios() -> Array[String]
+
+pub fn new(ScenarioKind, Int) -> GridGym
+
+pub fn new_cliff_walking(Int) -> GridGym
+
+pub fn new_empty_room(Int) -> GridGym
+
+pub fn new_four_rooms(Int) -> GridGym
+
+pub fn new_frozen_lake_like(Int) -> GridGym
+
+pub fn new_grid_world(Int) -> GridGym
+
+pub fn new_maze(Int) -> GridGym
+
+pub fn new_random_maze(Int) -> GridGym
+
+// Errors
+
+// Types and methods
+pub(all) enum Action {
+  Up
+  Down
+  Left
+  Right
+  Stay
+}
+
+pub struct EpisodeStats {
+  steps : Int
+  reward_sum : Int
+  terminated : Bool
+  truncated : Bool
+  final_render : String
+  info : String
+}
+
+pub struct GridGym {
+  kind : ScenarioKind
+  initial_seed : Int
+  mut seed : Int
+  width : Int
+  height : Int
+  start_x : Int
+  start_y : Int
+  goal_x : Int
+  goal_y : Int
+  mut agent_x : Int
+  mut agent_y : Int
+  mut step_count : Int
+  step_limit : Int
+  mut done : Bool
+  board : Array[Int]
+}
+pub fn GridGym::auto_solve(Self) -> EpisodeStats
+pub fn GridGym::reachable_cells(Self) -> Int
+pub fn GridGym::render(Self) -> String
+pub fn GridGym::reset(Self) -> Observation
+pub fn GridGym::rollout(Self, Array[Action]) -> EpisodeStats
+pub fn GridGym::route_string(Self) -> String
+pub fn GridGym::shortest_path(Self) -> PathPlan
+pub fn GridGym::step(Self, Action) -> StepResult
+pub fn GridGym::summary(Self) -> String
+
+pub struct Observation {
+  kind : String
+  ascii : String
+  agent_x : Int
+  agent_y : Int
+  step_count : Int
+  done : Bool
+}
+
+pub struct PathPlan {
+  found : Bool
+  steps : Int
+  actions : Array[Action]
+}
+
+pub(all) enum ScenarioKind {
+  GridWorld
+  CliffWalking
+  Maze
+  FrozenLakeLike
+  RandomMaze
+  EmptyRoom
+  FourRooms
+}
+
+pub struct StepResult {
+  observation : Observation
+  reward : Int
+  terminated : Bool
+  truncated : Bool
+  info : String
+}
+
+// Type aliases
+
+// Traits
+

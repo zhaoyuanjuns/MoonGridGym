@@ -1,6 +1,6 @@
 # MoonGridGym 项目申报书
 
-MoonGridGym 是一个使用 MoonBit 编写的轻量级 Gym 风格网格环境套件，面向 OSC2026 参赛展示场景设计，统一提供 `reset / step / render` 接口，并内置 `GridWorld`、`CliffWalking`、`Maze`、`FrozenLakeLike`、`RandomMaze` 等经典或可扩展环境。
+MoonGridGym 是一个使用 MoonBit 编写的轻量级 Gym 风格网格环境套件，面向 OSC2026 参赛展示场景设计，统一提供 `reset / step / render` 接口，并内置 `GridWorld`、`CliffWalking`、`Maze`、`FrozenLakeLike`、`RandomMaze`、`EmptyRoom` 和 `FourRooms` 等经典或可扩展环境。要求 MoonBit 0.10.3 及以上版本。
 
 ## 项目链接
 

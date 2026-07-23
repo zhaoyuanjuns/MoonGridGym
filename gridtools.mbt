@@ -17,6 +17,7 @@ pub struct EpisodeStats {
   info : String
 }
 
+///|
 fn filled_int_board(count : Int, value : Int) -> Array[Int] {
   let board = Array::new(capacity=count)
   for i = 0; i < count; i = i + 1 {
@@ -25,6 +26,7 @@ fn filled_int_board(count : Int, value : Int) -> Array[Int] {
   board
 }
 
+///|
 fn filled_bool_board(count : Int, value : Bool) -> Array[Bool] {
   let board = Array::new(capacity=count)
   for i = 0; i < count; i = i + 1 {
@@ -33,10 +35,12 @@ fn filled_bool_board(count : Int, value : Bool) -> Array[Bool] {
   board
 }
 
+///|
 fn empty_actions(capacity : Int) -> Array[Action] {
-  Array::new(capacity=capacity)
+  Array::new(capacity~)
 }
 
+///|
 fn action_to_index(action : Action) -> Int {
   match action {
     Up => 0
@@ -47,6 +51,7 @@ fn action_to_index(action : Action) -> Int {
   }
 }
 
+///|
 fn action_from_index(code : Int) -> Action {
   match code {
     0 => Up
@@ -57,10 +62,12 @@ fn action_from_index(code : Int) -> Action {
   }
 }
 
+///|
 fn is_walkable_tile(tile : Int) -> Bool {
   tile != TILE_WALL && tile != TILE_CLIFF && tile != TILE_HOLE
 }
 
+///|
 fn reverse_actions(actions : Array[Action]) -> Array[Action] {
   let out = Array::new(capacity=actions.length())
   let mut i = actions.length() - 1
@@ -71,7 +78,14 @@ fn reverse_actions(actions : Array[Action]) -> Array[Action] {
   out
 }
 
-fn grid_plan_from(env : GridGym, start_x : Int, start_y : Int, goal_x : Int, goal_y : Int) -> PathPlan {
+///|
+fn grid_plan_from(
+  env : GridGym,
+  start_x : Int,
+  start_y : Int,
+  goal_x : Int,
+  goal_y : Int,
+) -> PathPlan {
   let width = env.width
   let height = env.height
   let total = width * height
@@ -99,7 +113,8 @@ fn grid_plan_from(env : GridGym, start_x : Int, start_y : Int, goal_x : Int, goa
 
     if in_bounds(width, height, x, y - 1) {
       let nidx = board_index(width, x, y - 1)
-        if !visited[nidx] && is_walkable_tile(board_get(env.board, width, x, y - 1)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(env.board, width, x, y - 1)) {
         visited[nidx] = true
         parent[nidx] = idx
         parent_action[nidx] = action_to_index(Up)
@@ -109,7 +124,8 @@ fn grid_plan_from(env : GridGym, start_x : Int, start_y : Int, goal_x : Int, goa
 
     if in_bounds(width, height, x, y + 1) {
       let nidx = board_index(width, x, y + 1)
-        if !visited[nidx] && is_walkable_tile(board_get(env.board, width, x, y + 1)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(env.board, width, x, y + 1)) {
         visited[nidx] = true
         parent[nidx] = idx
         parent_action[nidx] = action_to_index(Down)
@@ -119,7 +135,8 @@ fn grid_plan_from(env : GridGym, start_x : Int, start_y : Int, goal_x : Int, goa
 
     if in_bounds(width, height, x - 1, y) {
       let nidx = board_index(width, x - 1, y)
-        if !visited[nidx] && is_walkable_tile(board_get(env.board, width, x - 1, y)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(env.board, width, x - 1, y)) {
         visited[nidx] = true
         parent[nidx] = idx
         parent_action[nidx] = action_to_index(Left)
@@ -129,7 +146,8 @@ fn grid_plan_from(env : GridGym, start_x : Int, start_y : Int, goal_x : Int, goa
 
     if in_bounds(width, height, x + 1, y) {
       let nidx = board_index(width, x + 1, y)
-        if !visited[nidx] && is_walkable_tile(board_get(env.board, width, x + 1, y)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(env.board, width, x + 1, y)) {
         visited[nidx] = true
         parent[nidx] = idx
         parent_action[nidx] = action_to_index(Right)
@@ -139,11 +157,7 @@ fn grid_plan_from(env : GridGym, start_x : Int, start_y : Int, goal_x : Int, goa
   }
 
   if !visited[goal] {
-    PathPlan::{
-      found: false,
-      steps: 0,
-      actions: empty_actions(0),
-    }
+    PathPlan::{ found: false, steps: 0, actions: empty_actions(0) }
   } else {
     let reversed = empty_actions(total)
     let mut cur = goal
@@ -153,11 +167,7 @@ fn grid_plan_from(env : GridGym, start_x : Int, start_y : Int, goal_x : Int, goa
       cur = parent[cur]
     }
     let actions = reverse_actions(reversed)
-    PathPlan::{
-      found: true,
-      steps: actions.length(),
-      actions,
-    }
+    PathPlan::{ found: true, steps: actions.length(), actions }
   }
 }
 
@@ -190,7 +200,8 @@ pub fn GridGym::reachable_cells(self : GridGym) -> Int {
 
     if in_bounds(width, height, x, y - 1) {
       let nidx = board_index(width, x, y - 1)
-      if !visited[nidx] && is_walkable_tile(board_get(self.board, width, x, y - 1)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(self.board, width, x, y - 1)) {
         visited[nidx] = true
         queue.push(nidx)
       }
@@ -198,7 +209,8 @@ pub fn GridGym::reachable_cells(self : GridGym) -> Int {
 
     if in_bounds(width, height, x, y + 1) {
       let nidx = board_index(width, x, y + 1)
-      if !visited[nidx] && is_walkable_tile(board_get(self.board, width, x, y + 1)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(self.board, width, x, y + 1)) {
         visited[nidx] = true
         queue.push(nidx)
       }
@@ -206,7 +218,8 @@ pub fn GridGym::reachable_cells(self : GridGym) -> Int {
 
     if in_bounds(width, height, x - 1, y) {
       let nidx = board_index(width, x - 1, y)
-      if !visited[nidx] && is_walkable_tile(board_get(self.board, width, x - 1, y)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(self.board, width, x - 1, y)) {
         visited[nidx] = true
         queue.push(nidx)
       }
@@ -214,7 +227,8 @@ pub fn GridGym::reachable_cells(self : GridGym) -> Int {
 
     if in_bounds(width, height, x + 1, y) {
       let nidx = board_index(width, x + 1, y)
-      if !visited[nidx] && is_walkable_tile(board_get(self.board, width, x + 1, y)) {
+      if !visited[nidx] &&
+        is_walkable_tile(board_get(self.board, width, x + 1, y)) {
         visited[nidx] = true
         queue.push(nidx)
       }
@@ -251,7 +265,10 @@ pub fn GridGym::route_string(self : GridGym) -> String {
 }
 
 ///|
-pub fn GridGym::rollout(self : GridGym, actions : Array[Action]) -> EpisodeStats {
+pub fn GridGym::rollout(
+  self : GridGym,
+  actions : Array[Action],
+) -> EpisodeStats {
   let mut steps = 0
   let mut reward_sum = 0
   let mut terminated = false

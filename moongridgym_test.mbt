@@ -36,6 +36,7 @@ test "frozen_lake_renders_holes" {
   assert_eq(rendered.contains("FrozenLakeLike"), true)
 }
 
+///|
 test "random_maze_can_auto_solve" {
   let env = @moongridgym.new_random_maze(2026)
   let plan = env.shortest_path()

@@ -1,10 +1,10 @@
-name = "zhaojingjun/moongridgym"
+name = "zhaoyuanjuns/moongridgym"
 
 version = "0.1.0"
 
 readme = "README.md"
 
-repository = ""
+repository = "https://github.com/zhaoyuanjuns/MoonGridGym"
 
 license = "MIT"
 

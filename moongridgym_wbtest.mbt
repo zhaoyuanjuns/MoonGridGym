@@ -13,9 +13,10 @@ test "maze_has_walls_and_goal" {
 ///|
 test "action_catalog_is_stable" {
   assert_eq(available_actions().length(), 5)
-  assert_eq(available_scenarios().length(), 5)
+  assert_eq(available_scenarios().length(), 7)
 }
 
+///|
 test "summary_mentions_dimensions" {
   let env = new_grid_world(7)
   let summary = env.summary()

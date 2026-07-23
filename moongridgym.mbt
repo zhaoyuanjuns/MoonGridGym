@@ -16,6 +16,8 @@ pub(all) enum ScenarioKind {
   Maze
   FrozenLakeLike
   RandomMaze
+  EmptyRoom
+  FourRooms
 }
 
 ///|
@@ -168,6 +170,8 @@ fn kind_name(kind : ScenarioKind) -> String {
     Maze => "Maze"
     FrozenLakeLike => "FrozenLakeLike"
     RandomMaze => "RandomMaze"
+    EmptyRoom => "EmptyRoom"
+    FourRooms => "FourRooms"
   }
 }
 
@@ -189,6 +193,8 @@ fn reward_for_goal(kind : ScenarioKind) -> Int {
     Maze => 25
     FrozenLakeLike => 20
     RandomMaze => 25
+    EmptyRoom => 10
+    FourRooms => 30
   }
 }
 
@@ -277,6 +283,23 @@ fn make_frozen_lake_like(seed : Int) -> GridGym {
 }
 
 ///|
+fn make_empty_room(seed : Int) -> GridGym {
+  let layout = layout_from_ascii([
+    "#######", "#S....#", "#.....#", "#.....#", "#.....#", "#....G#", "#######",
+  ])
+  make_env_from_layout(EmptyRoom, seed, layout, 48)
+}
+
+///|
+fn make_four_rooms(seed : Int) -> GridGym {
+  let layout = layout_from_ascii([
+    "###########", "#S...#....#", "#....#....#", "#....#....#", "#....#....#", "##.#####.##",
+    "#.........#", "#....#....#", "#....#....#", "#....#...G#", "###########",
+  ])
+  make_env_from_layout(FourRooms, seed, layout, 120)
+}
+
+///|
 fn carve_maze(
   seed : Int,
   width : Int,
@@ -361,6 +384,8 @@ pub fn new(kind : ScenarioKind, seed : Int) -> GridGym {
     Maze => make_maze_like(11, 11, 11, Maze)
     FrozenLakeLike => make_frozen_lake_like(seed)
     RandomMaze => make_maze_like(seed, 13, 13, RandomMaze)
+    EmptyRoom => make_empty_room(seed)
+    FourRooms => make_four_rooms(seed)
   }
 }
 
@@ -387,6 +412,16 @@ pub fn new_frozen_lake_like(seed : Int) -> GridGym {
 ///|
 pub fn new_random_maze(seed : Int) -> GridGym {
   make_maze_like(seed, 13, 13, RandomMaze)
+}
+
+///|
+pub fn new_empty_room(seed : Int) -> GridGym {
+  make_empty_room(seed)
+}
+
+///|
+pub fn new_four_rooms(seed : Int) -> GridGym {
+  make_four_rooms(seed)
 }
 
 ///|
@@ -539,5 +574,8 @@ pub fn available_actions() -> Array[String] {
 
 ///|
 pub fn available_scenarios() -> Array[String] {
-  ["GridWorld", "CliffWalking", "Maze", "FrozenLakeLike", "RandomMaze"]
+  [
+    "GridWorld", "CliffWalking", "Maze", "FrozenLakeLike", "RandomMaze", "EmptyRoom",
+    "FourRooms",
+  ]
 }
