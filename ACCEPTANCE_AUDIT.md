@@ -1,7 +1,7 @@
 # MoonGridGym 本地验收复核记录
 
-更新时间：2026-08-12。本文记录本地工作区的复核结果，不代表 GitHub、GitLink
-或 mooncakes.io 已被修改。
+更新时间：2026-08-15。本文记录本地工作区、GitHub 和 Mooncakes 的复核结果；
+申报书文件未修改。
 
 ## 已验证通过
 
@@ -16,29 +16,32 @@
   工具；不是空函数或重复代码。
 - 根目录 MIT `LICENSE` 清晰；`docs-source-provenance.md` 声明无复制的上游代码、
   无不明生成贡献者，并说明未来引用上游时的披露义务。
-- GitHub Actions 已包含格式、包信息、拒绝警告检查、测试和可运行示例；功能与
-  CI 基线提交 `ee3d641` 的远程 CI 已成功通过：
-  https://github.com/zhaoyuanjuns/MoonGridGym/actions/runs/31885057334
+- GitHub Actions 已包含格式、包信息、拒绝警告检查、测试和可运行示例；功能提交
+  `e3ab489` 的远程 CI 已成功通过：
+  https://github.com/zhaoyuanjuns/MoonGridGym/actions/runs/31885245531
 - `moon.mod` 模块名为 `zhaoyuanjuns/moongridgym`，仓库地址、README 和许可证
   字段已填写。
 - CliffWalking 到达目标时现在返回正奖励 `50`，跌入悬崖仍返回 `-100`，两种
   终止路径分别有回归测试。
 
-## 仍不能在本地替代确认的验收项
+## 当前外部状态
 
-- mooncakes.io 是否已经发布，以及发布版本是否与最终验收提交一致；当前本地已
-  按邮件要求准备好 `zhaojingjun/moongridgym`，发布动作需在提交推送后执行。
-- GitHub 已更新到最新提交；GitLink 的 `master` 仍为旧提交，推送时远端返回
-  `Gitea: User permission denied for writing`，需要 `zyjzyj78` 仓库写权限。
-- mooncakes.io 预发布检查已完成打包和本地解包验证；模块 namespace 应与当前登录
-  用户和 GitHub owner 一致，即 `zhaoyuanjuns/moongridgym`。
+- `zhaoyuanjuns/moongridgym` 版本 `0.1.1` 已通过打包、解包复核并由
+  `moon publish` 返回 `200 OK`。
+- GitHub `master` 已更新到 `e3ab489`，远程 CI 已成功。
+- GitLink 的 `master` 仍为旧提交 `b871e36`。标准 token/basic 认证返回
+  `Verify / Authentication failed`，因此该镜像仍需要有效的 GitLink 写入凭据或
+  仓库授权。
 - 正式申报材料中提交的 GitHub/GitLink 链接、申请人账号和默认分支是否与组委会
   系统登记完全一致。
 
-## 授权后的发布顺序
+## GitLink 剩余处理
 
-1. 先审阅本地工作区改动并形成一个有意义的提交。
-2. 在 GitHub 和 GitLink 分别确认默认分支为 `master`，再按你的明确指令推送；不
-   自动推送，也不执行任何 gitlink 操作。
-3. 确认远程 CI 通过后，再按 `moon.mod` 的模块名发布到 mooncakes.io。
-4. 记录发布版本、包页面和对应提交，作为 8 月 17 日最终验收证据。
+确认 GitLink 账号对 `zyjzyj78/MoonGridGym` 具有写权限并登录后，在当前工作区执行：
+
+```bash
+git push gitlink master
+```
+
+成功后应核对 GitHub 与 GitLink 的 `master` 都指向 `e3ab489`，并将 GitHub、
+GitLink、Mooncakes 版本 `0.1.1` 一并作为最终验收证据。
