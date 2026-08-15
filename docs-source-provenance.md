@@ -18,5 +18,8 @@ MoonGridGym is an original MoonBit implementation created for OSC2026 track 1.
 
 ## Maintenance note
 
-The repository is intentionally kept small, readable, and contest-friendly so
-that it can be audited quickly by reviewers and extended later if needed.
+The repository remains dependency-free and readable, while now including a
+maintained benchmark harness, replay checks, numeric observation encoding,
+offline trajectory export, policy comparisons, and executable acceptance
+contracts. These are original MoonBit implementations, not copied line-count
+fillers.

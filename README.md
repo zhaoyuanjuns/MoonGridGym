@@ -20,24 +20,56 @@ Each environment exposes the same three operations:
 The suite also ships with a built-in shortest-path solver and rollout helpers
 for quick demos and evaluation.
 
-The goal is to give MoonBit developers a clean, easy-to-test foundation for
-simulation, planning, search, and reinforcement-learning demos.
+The goal is to provide a reusable, deterministic foundation for simulation,
+planning, search, offline trajectory collection, and reinforcement-learning
+experiments—not a one-off visual demo.
 
 ## Why this is a good OSC2026 topic
 
 - It is useful on its own, not just as a demo.
 - It sits in a mature area, so the scope can grow without getting narrow.
-- It is small enough to fit the contest's reference code-size range.
-- It gives you good README, tests, and example material for review.
+- It includes executable benchmark, validation, replay, and dataset tooling.
+- It has fixed and seeded scenarios so results can be reproduced in CI.
+- It exposes numeric observation encoding for downstream agents.
 
 ## Quick Start
 
 Requires MoonBit Toolchain v0.10.3 or later.
 
+To obtain the source and run the project locally:
+
+```bash
+git clone https://github.com/zhaoyuanjuns/MoonGridGym.git
+cd MoonGridGym
+moon check
+moon test
+moon run cmd/main
+```
+
+To use the published module from another MoonBit project after the release is
+available:
+
+```bash
+moon add zhaojingjun/moongridgym
+```
+
+The module name above is intentionally `zhaojingjun/moongridgym`, as required
+by the acceptance notice. The GitHub repository owner may be different from
+the MoonBit registry namespace.
+
 ```bash
 moon check
 moon test
 moon run cmd/main
+```
+
+For the strict local gate, also run:
+
+```bash
+moon fmt --check
+moon info
+moon check --deny-warn
+moon test --deny-warn
 ```
 
 ## API
@@ -75,7 +107,8 @@ println(result.observation.ascii)
 ### Scenarios
 
 - `GridWorld` focuses on pathfinding with a simple obstacle layout.
-- `CliffWalking` mirrors the classic control task with a harsh failure state.
+- `CliffWalking` mirrors the classic control task with a harsh failure state
+  and a positive terminal reward when the goal is reached safely.
 - `Maze` is a fixed benchmark maze for deterministic examples.
 - `FrozenLakeLike` adds slipping behavior and holes.
 - `RandomMaze` generates a seeded maze for replayable experiments.
@@ -88,6 +121,65 @@ println(result.observation.ascii)
 - `route_string()` formats that plan as a readable action sequence.
 - `rollout(actions)` runs a batch of actions and summarizes the episode.
 - `auto_solve()` runs the shortest-path plan when one exists.
+
+### Evaluation and data helpers
+
+- `benchmark(seed, episodes)` evaluates planner, greedy, and seeded-random
+  policies across all seven scenarios.
+- `validate_all(seed)` checks reset determinism, reachability, and solvability.
+- `collect_episode(...)` returns replayable transitions and `to_csv()` exports
+  an offline-RL-friendly dataset without external dependencies.
+- `encode()` provides a numeric board representation and checksum.
+- `action_checks()` and `legal_actions()` expose boundary and hazard behavior.
+- `replay_check(...)` detects hidden-state or random-seed regressions.
+- `quality_report`, `contracts_report`, and `release_gate` produce CI-friendly
+  acceptance evidence.
+
+The command-line example prints a scenario summary, a route, a reference
+rollout, and the local release gate. The library itself remains dependency
+free and can be embedded in another MoonBit package.
+
+## Reproducible benchmark
+
+```mbt
+let rows = @moongridgym.benchmark(2026, 5)
+let report = @moongridgym.benchmark_report(2026, 5)
+let data = @moongridgym.collect_episode(
+  @moongridgym.ScenarioKind::RandomMaze,
+  2026,
+  @moongridgym.PolicyKind::ShortestPath,
+  512,
+)
+println(data.summary())
+println(data.to_csv())
+```
+
+The seed is part of every benchmark and dataset record. `RandomMaze` is
+generated from the seed, while `FrozenLakeLike` uses the seed for its slip
+sequence. A repeated seed and action sequence must produce identical replay
+results; this is covered by the test suite.
+
+## Project boundaries
+
+In scope: discrete 2-D grid environments, deterministic and seeded stochastic
+transitions, rendering, shortest-path planning, baseline policy evaluation,
+trajectory capture, numeric encoding, and validation utilities.
+
+Out of scope: neural-network training, external simulators, network services,
+and a claim of Gymnasium API binary compatibility. These boundaries keep the
+package portable while leaving clear extension points for future MoonBit
+agents.
+
+## Current engineering evidence
+
+- MoonBit is the primary implementation language.
+- The repository contains more than 3,000 lines of maintained `.mbt` source
+  and tests, including the environment core, planning, benchmark harness,
+  dataset export, replay checks, and acceptance contracts.
+- Seven scenarios, four policy families, seeded benchmark runs, boundary
+  checks, deterministic replay checks, and 36 automated tests are included.
+- CI runs formatting, package info, warning-denied checks, tests, and the
+  runnable example.
 
 ## Repository policy
 
@@ -118,11 +210,21 @@ println(result.observation.ascii)
 - GitHub Actions CI
 - Mooncakes.io publication before final submission
 
+## Mooncakes.io release checklist
+
+Publishing is intentionally not performed by local development commands. After
+the repository owner authorizes the external release, verify the default
+branch, confirm the final GitHub/GitLink mirrors contain the same commit, and
+then publish the module named `zhaojingjun/moongridgym` from `moon.mod`.
+The acceptance package should retain the published version, package page, and
+the exact commit used for publication as evidence.
+
 ## Notes for submission
 
 The OSC2026 guide requires the repository to be public, readable, and actively
 maintained. It also expects the acceptance materials to show the repository link,
 README, CI, tests, and Mooncakes publication.
 
-If you publish this project to GitHub, replace the empty `repository` field in
-`moon.mod` with the final URL.
+The `repository` field in `moon.mod` is already set to the GitHub project URL.
+Do not publish to GitHub, GitLink, or Mooncakes.io from an unreviewed local
+working tree.

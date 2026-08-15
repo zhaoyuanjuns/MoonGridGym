@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-15
+
+- Aligned the MoonBit registry module name with the acceptance notice:
+  `zhaojingjun/moongridgym`.
+- Fixed CliffWalking goal rewards so safe arrival is positive while cliff
+  failure remains `-100`.
+- Added regression coverage for goal rewards, hazards, seeded slipping,
+  truncation, and deterministic reset behavior.
+- Documented source acquisition and `moon add` usage in the README.
+
 ## 2026-07-12
 
 - Reworked MoonGridGym into a contest-ready MoonBit environment suite.

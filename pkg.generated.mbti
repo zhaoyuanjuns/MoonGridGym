@@ -1,10 +1,66 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "zhaoyuanjuns/moongridgym"
+package "zhaojingjun/moongridgym"
 
 // Values
+pub fn action_name(Action) -> String
+
+pub fn action_roundtrip_count() -> Int
+
+pub fn action_table() -> Array[String]
+
+pub fn all_contracts_pass(Int) -> Bool
+
+pub fn all_planner_regrets(Int, PolicyKind) -> Array[Int]
+
+pub fn all_plans_valid(Int) -> Bool
+
 pub fn available_actions() -> Array[String]
 
+pub fn available_policies() -> Array[String]
+
 pub fn available_scenarios() -> Array[String]
+
+pub fn benchmark(Int, Int) -> Array[BenchmarkRow]
+
+pub fn benchmark_report(Int, Int) -> String
+
+pub fn boundary_report(Int) -> String
+
+pub fn boundary_score(ScenarioKind, Int) -> BoundaryScore
+
+pub fn collect_episode(ScenarioKind, Int, PolicyKind, Int) -> EpisodeDataset
+
+pub fn collect_reference_dataset(Int) -> Array[EpisodeDataset]
+
+pub fn compare_policies(ScenarioKind, Int) -> PolicyComparison
+
+pub fn contract_dataset(ScenarioKind, Int) -> ContractResult
+
+pub fn contract_render(ScenarioKind, Int) -> ContractResult
+
+pub fn contract_replay(ScenarioKind, Int) -> ContractResult
+
+pub fn contract_reset(ScenarioKind, Int) -> ContractResult
+
+pub fn contract_solver(ScenarioKind, Int) -> ContractResult
+
+pub fn contract_step_progress(ScenarioKind, Int) -> ContractResult
+
+pub fn contracts_for(ScenarioKind, Int) -> Array[ContractResult]
+
+pub fn contracts_passed(ScenarioKind, Int) -> Bool
+
+pub fn contracts_report(Int) -> String
+
+pub fn execute_all_plans(Int) -> Array[PlanExecution]
+
+pub fn execute_plan(ScenarioKind, Int) -> PlanExecution
+
+pub fn histogram(EpisodeDataset) -> ActionHistogram
+
+pub fn histogram_report(EpisodeDataset) -> String
+
+pub fn mean_reward(ScenarioKind, PolicyKind, Int, Int) -> Int
 
 pub fn new(ScenarioKind, Int) -> GridGym
 
@@ -22,6 +78,56 @@ pub fn new_maze(Int) -> GridGym
 
 pub fn new_random_maze(Int) -> GridGym
 
+pub fn normalized_episode_count(Int) -> Int
+
+pub fn normalized_step_limit(Int) -> Int
+
+pub fn plan_is_valid(ScenarioKind, Int) -> Bool
+
+pub fn planner_regret(ScenarioKind, PolicyKind, Int) -> Int
+
+pub fn policy_comparison_matrix(Int) -> Array[PolicyComparison]
+
+pub fn policy_comparison_report(Int) -> String
+
+pub fn project_status(Int) -> String
+
+pub fn quality_report(Int) -> String
+
+pub fn quality_score(Int) -> QualityScore
+
+pub fn release_gate(Int) -> String
+
+pub fn replay_check(ScenarioKind, Int, Array[Action]) -> ReplayComparison
+
+pub fn run_policy(GridGym, PolicyKind, Int, Int) -> EpisodeScore
+
+pub fn scenario_catalog(Int) -> Array[ScenarioMetadata]
+
+pub fn scenario_catalog_report(Int) -> String
+
+pub fn scenario_name(ScenarioKind) -> String
+
+pub fn scenario_table() -> Array[String]
+
+pub fn snapshot(ScenarioKind, Int) -> String
+
+pub fn snapshot_batch(Int) -> SnapshotBatch
+
+pub fn snapshot_report(Int) -> String
+
+pub fn success_rate(ScenarioKind, PolicyKind, Int, Int) -> Int
+
+pub fn total_regret(Int, PolicyKind) -> Int
+
+pub fn train_curve(ScenarioKind, PolicyKind, Int, Int) -> TrainingCurve
+
+pub fn validate(ScenarioKind, Int) -> ValidationReport
+
+pub fn validate_all(Int) -> Array[ValidationReport]
+
+pub fn validation_report(Int) -> String
+
 // Errors
 
 // Types and methods
@@ -31,6 +137,89 @@ pub(all) enum Action {
   Left
   Right
   Stay
+}
+
+pub struct ActionCheck {
+  action : String
+  legal : Bool
+  moves : Bool
+  reaches_goal : Bool
+  lands_in_hazard : Bool
+  reason : String
+}
+
+pub struct ActionHistogram {
+  up : Int
+  down : Int
+  left : Int
+  right : Int
+  stay : Int
+  total : Int
+}
+
+pub struct BenchmarkRow {
+  scenario : String
+  policy : String
+  episodes : Int
+  successes : Int
+  total_steps : Int
+  total_reward : Int
+  min_steps : Int
+  max_steps : Int
+  reachable : Int
+  planned_steps : Int
+}
+
+pub struct BoundaryScore {
+  scenario : String
+  tested_actions : Int
+  blocked_actions : Int
+  hazard_actions : Int
+  goal_actions : Int
+  stable : Bool
+}
+
+pub struct ContractResult {
+  name : String
+  passed : Bool
+  detail : String
+}
+
+pub struct EncodedObservation {
+  width : Int
+  height : Int
+  agent_x : Int
+  agent_y : Int
+  goal_x : Int
+  goal_y : Int
+  step : Int
+  done : Bool
+  cells : Array[Int]
+}
+pub fn EncodedObservation::checksum(Self) -> Int
+
+pub struct EpisodeDataset {
+  scenario : String
+  seed : Int
+  transitions : Array[Transition]
+  total_reward : Int
+  success : Bool
+}
+pub fn EpisodeDataset::length(Self) -> Int
+pub fn EpisodeDataset::summary(Self) -> String
+pub fn EpisodeDataset::to_csv(Self) -> String
+
+pub struct EpisodeScore {
+  scenario : String
+  policy : String
+  seed : Int
+  steps : Int
+  reward : Int
+  success : Bool
+  terminated : Bool
+  truncated : Bool
+  reachable : Int
+  planned_steps : Int
 }
 
 pub struct EpisodeStats {
@@ -59,7 +248,10 @@ pub struct GridGym {
   mut done : Bool
   board : Array[Int]
 }
+pub fn GridGym::action_checks(Self) -> Array[ActionCheck]
 pub fn GridGym::auto_solve(Self) -> EpisodeStats
+pub fn GridGym::encode(Self) -> EncodedObservation
+pub fn GridGym::legal_actions(Self) -> Array[Action]
 pub fn GridGym::reachable_cells(Self) -> Int
 pub fn GridGym::render(Self) -> String
 pub fn GridGym::reset(Self) -> Observation
@@ -84,6 +276,55 @@ pub struct PathPlan {
   actions : Array[Action]
 }
 
+pub struct PlanExecution {
+  found : Bool
+  planned_steps : Int
+  executed_steps : Int
+  reached_goal : Bool
+  reward : Int
+  exact : Bool
+}
+
+pub struct PolicyComparison {
+  scenario : String
+  seed : Int
+  best_policy : String
+  best_reward : Int
+  planner_reward : Int
+  greedy_reward : Int
+  random_reward : Int
+  stay_reward : Int
+  planner_success : Bool
+  greedy_success : Bool
+  random_success : Bool
+  stay_success : Bool
+}
+
+pub(all) enum PolicyKind {
+  ShortestPath
+  GreedyGoal
+  SeededRandom
+  Stay
+}
+
+pub struct QualityScore {
+  scenarios : Int
+  valid_scenarios : Int
+  solvable_scenarios : Int
+  deterministic_scenarios : Int
+  total_reachable : Int
+  total_planned_steps : Int
+  passed : Bool
+}
+
+pub struct ReplayComparison {
+  same_observation : Bool
+  same_reward : Bool
+  same_terminal_flags : Bool
+  compared_steps : Int
+  mismatch_count : Int
+}
+
 pub(all) enum ScenarioKind {
   GridWorld
   CliffWalking
@@ -94,12 +335,63 @@ pub(all) enum ScenarioKind {
   FourRooms
 }
 
+pub struct ScenarioMetadata {
+  kind : String
+  description : String
+  width : Int
+  height : Int
+  step_limit : Int
+  supports_stochasticity : Bool
+  recommended_use : String
+}
+
+pub struct SnapshotBatch {
+  seed : Int
+  values : Array[String]
+  checksum : Int
+}
+
 pub struct StepResult {
   observation : Observation
   reward : Int
   terminated : Bool
   truncated : Bool
   info : String
+}
+
+pub struct TrainingCurve {
+  scenario : String
+  policy : String
+  rewards : Array[Int]
+  successes : Array[Bool]
+  cumulative_reward : Int
+}
+pub fn TrainingCurve::report(Self) -> String
+pub fn TrainingCurve::successes(Self) -> Int
+
+pub struct Transition {
+  scenario : String
+  seed : Int
+  index : Int
+  x : Int
+  y : Int
+  action : String
+  reward : Int
+  next_x : Int
+  next_y : Int
+  terminated : Bool
+  truncated : Bool
+  info : String
+}
+
+pub struct ValidationReport {
+  scenario : String
+  valid : Bool
+  reachable : Int
+  planned_steps : Int
+  checks : Int
+  failures : Int
+  message : String
 }
 
 // Type aliases

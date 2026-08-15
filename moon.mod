@@ -1,4 +1,4 @@
-name = "zhaoyuanjuns/moongridgym"
+name = "zhaojingjun/moongridgym"
 
 version = "0.1.0"
 

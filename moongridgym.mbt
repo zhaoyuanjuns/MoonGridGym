@@ -189,7 +189,7 @@ fn tile_char(tile : Int) -> Char {
 fn reward_for_goal(kind : ScenarioKind) -> Int {
   match kind {
     GridWorld => 12
-    CliffWalking => -100
+    CliffWalking => 50
     Maze => 25
     FrozenLakeLike => 20
     RandomMaze => 25

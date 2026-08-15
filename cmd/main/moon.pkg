@@ -1,5 +1,5 @@
 import {
-  "zhaoyuanjuns/moongridgym" @gym,
+  "zhaojingjun/moongridgym" @gym,
 }
 
 options(

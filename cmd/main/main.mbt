@@ -14,4 +14,6 @@ fn main {
   let stats = env.auto_solve()
   println(stats.info)
   println(stats.final_render)
+  println(@gym.release_gate(2026))
+  println(@gym.project_status(2026))
 }

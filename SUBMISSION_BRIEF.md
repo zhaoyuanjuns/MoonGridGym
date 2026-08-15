@@ -6,6 +6,7 @@ MoonGridGym is a lightweight Gym-style environment suite for MoonBit.
 
 - GitLink: https://gitlink.org.cn/zyjzyj78/MoonGridGym
 - GitHub: https://github.com/zhaoyuanjuns/MoonGridGym
+- MoonBit module: `zhaojingjun/moongridgym`
 
 ## Highlights
 
