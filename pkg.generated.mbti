@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "zhaojingjun/moongridgym"
+package "zhaoyuanjuns/moongridgym"
 
 // Values
 pub fn action_name(Action) -> String

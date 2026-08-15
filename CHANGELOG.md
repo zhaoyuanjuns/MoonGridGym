@@ -1,9 +1,15 @@
 # Changelog
 
+## 0.1.1 - 2026-08-15
+
+- Corrected the registry namespace to `zhaoyuanjuns/moongridgym`.
+- Fixed the acceptance release metadata and documented the verified package
+  namespace.
+
 ## 2026-08-15
 
-- Aligned the MoonBit registry module name with the acceptance notice:
-  `zhaojingjun/moongridgym`.
+- Aligned the MoonBit registry module name with the authenticated project
+  account: `zhaoyuanjuns/moongridgym`.
 - Fixed CliffWalking goal rewards so safe arrival is positive while cliff
   failure remains `-100`.
 - Added regression coverage for goal rewards, hazards, seeded slipping,

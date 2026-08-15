@@ -50,12 +50,11 @@ To use the published module from another MoonBit project after the release is
 available:
 
 ```bash
-moon add zhaojingjun/moongridgym
+moon add zhaoyuanjuns/moongridgym
 ```
 
-The module name above is intentionally `zhaojingjun/moongridgym`, as required
-by the acceptance notice. The GitHub repository owner may be different from
-the MoonBit registry namespace.
+The module name above matches the authenticated MoonBit account and the GitHub
+repository owner: `zhaoyuanjuns/moongridgym`.
 
 ```bash
 moon check
@@ -215,7 +214,7 @@ agents.
 Publishing is intentionally not performed by local development commands. After
 the repository owner authorizes the external release, verify the default
 branch, confirm the final GitHub/GitLink mirrors contain the same commit, and
-then publish the module named `zhaojingjun/moongridgym` from `moon.mod`.
+then publish the module named `zhaoyuanjuns/moongridgym` from `moon.mod`.
 The acceptance package should retain the published version, package page, and
 the exact commit used for publication as evidence.
 
