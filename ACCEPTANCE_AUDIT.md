@@ -16,7 +16,9 @@
   工具；不是空函数或重复代码。
 - 根目录 MIT `LICENSE` 清晰；`docs-source-provenance.md` 声明无复制的上游代码、
   无不明生成贡献者，并说明未来引用上游时的披露义务。
-- GitHub Actions 已包含格式、包信息、拒绝警告检查、测试和可运行示例。
+- GitHub Actions 已包含格式、包信息、拒绝警告检查、测试和可运行示例；最新
+  `master` 提交 `5161226` 的远程 CI 已成功通过：
+  https://github.com/zhaoyuanjuns/MoonGridGym/actions/runs/31885015390
 - `moon.mod` 模块名为 `zhaojingjun/moongridgym`，仓库地址、README 和许可证
   字段已填写。
 - CliffWalking 到达目标时现在返回正奖励 `50`，跌入悬崖仍返回 `-100`，两种
@@ -26,10 +28,11 @@
 
 - mooncakes.io 是否已经发布，以及发布版本是否与最终验收提交一致；当前本地已
   按邮件要求准备好 `zhaojingjun/moongridgym`，发布动作需在提交推送后执行。
-- GitHub 与 GitLink 的远端内容是否都已更新到本地最新提交；当前 GitHub 的
-  `master` 指向本地旧 HEAD，而 GitLink 的 `master` 更早，均未推送。
-- GitHub Actions 最近一次远程运行是否成功；本地 CI 等价命令已通过，但远程状态
-  需要授权后查看。
+- GitHub 已更新到最新提交；GitLink 的 `master` 仍为旧提交，推送时远端返回
+  `Gitea: User permission denied for writing`，需要 `zyjzyj78` 仓库写权限。
+- mooncakes.io 预发布检查已完成打包和本地解包验证，但服务器返回
+  `User mismatch`：当前登录用户是 `zhaoyuanjuns`，而邮件要求的模块 namespace
+  是 `zhaojingjun`；需要使用 `zhaojingjun` 账号重新登录后发布。
 - 正式申报材料中提交的 GitHub/GitLink 链接、申请人账号和默认分支是否与组委会
   系统登记完全一致。
 
