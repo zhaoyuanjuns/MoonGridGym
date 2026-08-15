@@ -16,8 +16,8 @@
   工具；不是空函数或重复代码。
 - 根目录 MIT `LICENSE` 清晰；`docs-source-provenance.md` 声明无复制的上游代码、
   无不明生成贡献者，并说明未来引用上游时的披露义务。
-- GitHub Actions 已包含格式、包信息、拒绝警告检查、测试和可运行示例；最新
-  `master` 提交 `ee3d641` 的远程 CI 已成功通过：
+- GitHub Actions 已包含格式、包信息、拒绝警告检查、测试和可运行示例；功能与
+  CI 基线提交 `ee3d641` 的远程 CI 已成功通过：
   https://github.com/zhaoyuanjuns/MoonGridGym/actions/runs/31885057334
 - `moon.mod` 模块名为 `zhaojingjun/moongridgym`，仓库地址、README 和许可证
   字段已填写。
